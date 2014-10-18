@@ -142,22 +142,26 @@
 			function buildNestableHtml(model, tpl){
 				var root = $('<div class="dd"></div>');
 				var rootList = $('<ol class="dd-list"></ol>').appendTo(root);
-				model.forEach(function f(item){
-					var list = Array.prototype.slice.call(arguments).slice(-1)[0];
-					if(!(list instanceof $)) list = rootList;
+        if(model.length > 0 ) {
+          model.forEach(function f(item){
+            var list = Array.prototype.slice.call(arguments).slice(-1)[0];
+            if(!(list instanceof $)) list = rootList;
 
-					var listItem = $('<li class="dd-item"></li>');
-					var listElement = $('<div ng-nestable-item class="dd-handle"></div>');
-					listElement.append(tpl).appendTo(listItem);
-					list.append(listItem);
-					listItem.data('item', item.item);
-					if(isArray(item.children) && item.children.length > 0){
-						var subRoot = $('<ol class="dd-list"></ol>').appendTo(listItem);
-						item.children.forEach(function(item){
-							f.apply(this, Array.prototype.slice.call(arguments).concat([subRoot]));
-						});
-					}
-				});
+            var listItem = $('<li class="dd-item"></li>');
+            var listElement = $('<div ng-nestable-item class="dd-handle"></div>');
+            listElement.append(tpl).appendTo(listItem);
+            list.append(listItem);
+            listItem.data('item', item.item);
+            if(isArray(item.children) && item.children.length > 0){
+              var subRoot = $('<ol class="dd-list"></ol>').appendTo(listItem);
+              item.children.forEach(function(item){
+                f.apply(this, Array.prototype.slice.call(arguments).concat([subRoot]));
+              });
+            }
+          });
+        } else {
+          var emmpty = $('<li class="dd-empty"></li>').appendTo(rootList);
+        }
 
 				return root;
 			}
