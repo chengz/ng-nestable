@@ -141,8 +141,8 @@
 
 			function buildNestableHtml(model, tpl){
 				var root = $('<div class="dd"></div>');
-				var rootList = $('<ol class="dd-list"></ol>').appendTo(root);
         if(model.length > 0 ) {
+          var rootList = $('<ol class="dd-list"></ol>').appendTo(root);
           model.forEach(function f(item){
             var list = Array.prototype.slice.call(arguments).slice(-1)[0];
             if(!(list instanceof $)) list = rootList;
@@ -160,7 +160,7 @@
             }
           });
         } else {
-          var emmpty = $('<li class="dd-empty"></li>').appendTo(rootList);
+          var emmpty = $('<div class="dd-empty"></div>').appendTo(root);
         }
 
 				return root;
